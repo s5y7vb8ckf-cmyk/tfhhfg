@@ -1,0 +1,28 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /menus/{menuId} {
+      // الزوار يقرؤون المنشور فقط. صاحب الحساب يستطيع قراءة قوائمه غير المنشورة.
+      allow get: if resource.data.published == true || (request.auth != null && resource.data.ownerUid == request.auth.uid);
+      allow list: if request.auth != null && resource.data.ownerUid == request.auth.uid;
+      allow create: if request.auth != null
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.keys().hasOnly(['ownerUid', 'slug', 'businessName', 'description', 'logoUrl', 'coverUrl', 'currency', 'themeColor', 'published', 'categories', 'createdAt', 'updatedAt'])
+        && request.resource.data.slug == menuId
+        && request.resource.data.businessName is string
+        && request.resource.data.businessName.size() <= 80
+        && request.resource.data.categories is list
+        && request.resource.data.categories.size() <= 30;
+      allow update: if request.auth != null
+        && resource.data.ownerUid == request.auth.uid
+        && request.resource.data.ownerUid == resource.data.ownerUid
+        && request.resource.data.slug == resource.data.slug
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['businessName', 'description', 'logoUrl', 'coverUrl', 'currency', 'themeColor', 'published', 'categories', 'updatedAt'])
+        && request.resource.data.businessName is string
+        && request.resource.data.businessName.size() <= 80
+        && request.resource.data.categories is list
+        && request.resource.data.categories.size() <= 30;
+      allow delete: if request.auth != null && resource.data.ownerUid == request.auth.uid;
+    }
+  }
+}

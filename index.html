@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#111b2e" />
+  <meta name="description" content="ميلو منيو - أنشئ قائمة طعام إلكترونية وشارك رابطها وQR" />
+  <title>MILO MENU | ميلو منيو</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="toast" role="status" aria-live="polite"></div>
+<div id="loading" class="loading hidden"><div class="spinner"></div><span>جاري التحميل...</span></div>
+
+<main id="authView" class="auth-page hidden">
+  <section class="auth-promo">
+    <div class="brand-xl"><span class="brand-glyph">M</span> MILO<span>MENU</span></div>
+    <div class="promo-content"><div class="eyebrow">منيوك، بهويتك، برابطك</div><h1>منيو إلكتروني احترافي<br><em>في دقائق.</em></h1><p>أنشئ قائمتك، أضف المنتجات وصورها، وانشر رابطًا واحدًا يعمل على جميع الأجهزة.</p><div class="promo-features"><span>✓ لوحة تحكم خاصة</span><span>✓ تحديث فوري</span><span>✓ رابط وQR لكل منيو</span></div></div>
+    <div class="promo-foot">MILO TECHNOLOGIES</div>
+  </section>
+  <section class="auth-panel"><div class="auth-inner"><div class="mini-brand">MILO <b>MENU</b></div><h2 id="authHeading">تسجيل الدخول</h2><p class="muted">ادخل لإدارة قوائم الطعام الخاصة بك.</p><form id="authForm" class="form-stack"><label>البريد الإلكتروني<input id="email" type="email" autocomplete="email" placeholder="name@example.com" required /></label><label>كلمة المرور<input id="password" type="password" autocomplete="current-password" minlength="6" placeholder="••••••••" required /></label><button id="authSubmit" class="btn primary" type="submit">دخول إلى لوحة التحكم</button></form><button id="authSwitch" class="text-link" type="button">ما عندك حساب؟ أنشئ حسابًا جديدًا</button><p class="auth-hint">باستخدام الخدمة، أنت مسؤول عن محتوى قائمتك وصحة الأسعار.</p></div></section>
+</main>
+
+<div id="appView" class="app hidden">
+  <aside class="sidebar"><div class="brand"><span class="brand-glyph">M</span><span>MILO <b>MENU</b><small>لوحة التحكم</small></span></div><nav class="nav"><button id="navMenus" class="nav-item active" type="button"><span>▦</span> قوائم الطعام</button><button id="navNew" class="nav-item" type="button"><span>＋</span> إنشاء منيو جديد</button></nav><div class="sidebar-bottom"><div class="user-chip"><div class="avatar">م</div><div><div id="userEmail" class="ellipsis">—</div><small>حساب التاجر</small></div></div><button id="logout" class="btn ghost full" type="button">تسجيل الخروج</button></div></aside>
+  <div class="workspace"><header class="topbar"><div class="mobile-brand">MILO <b>MENU</b></div><div class="breadcrumbs">لوحة التحكم <span>/</span> <b id="crumb">قوائم الطعام</b></div><div class="top-actions"><button id="goDashboard" class="btn outline small hidden" type="button">↩ جميع القوائم</button><span class="top-badge">لوحة إدارة آمنة</span></div></header>
+    <section id="dashboard" class="content"><div class="heading-row"><div><div class="eyebrow blue">ابدأ مع ميلو</div><h1>قوائم الطعام الخاصة بك</h1><p class="muted">كل قائمة تحصل على رابط مستقل يمكن مشاركته مع الزبائن.</p></div><button id="newMenu" class="btn primary" type="button">+ إنشاء منيو جديد</button></div><div class="metric-row"><div class="metric"><span>إجمالي القوائم</span><strong id="totalMenus">0</strong></div><div class="metric"><span>المنشورة</span><strong id="publishedMenus">0</strong></div></div><div id="menusList" class="menu-grid"></div><div id="emptyMenus" class="empty-state hidden"><div class="empty-icon">▤</div><h3>أول منيو لك يبدأ من هنا</h3><p>صمم قائمة طعامك وأضف أقسامك ومنتجاتك ثم انشر الرابط.</p><button id="emptyCreate" class="btn primary" type="button">إنشاء أول منيو</button></div></section>
+    <section id="editor" class="content hidden"><div class="heading-row editor-header"><div><div class="eyebrow blue">تحرير المنيو</div><h1 id="editorTitle">منيو جديد</h1><p class="muted">التعديلات لا تظهر للزبائن حتى تضغط حفظ التعديلات.</p></div><div class="editor-actions"><button id="previewBtn" class="btn outline" type="button">معاينة</button><button id="saveMenu" class="btn primary" type="button">حفظ التعديلات</button></div></div>
+      <div class="editor-layout"><div class="editor-main"><div class="panel"><div class="panel-title"><div><h2>هوية المنيو</h2><p>المعلومات التي يشاهدها الزبون</p></div></div><div class="fields"><label>اسم المطعم أو النشاط <input id="businessName" maxlength="80" placeholder="مثال: كافيه ميلو" required /></label><label>وصف قصير<textarea id="businessDescription" maxlength="250" rows="2" placeholder="مرحباً بكم في قائمتنا..."></textarea></label><div class="field-grid"><label>رابط الشعار (اختياري)<input id="logoUrl" type="url" placeholder="https://..." /></label><label>رابط صورة الغلاف (اختياري)<input id="coverUrl" type="url" placeholder="https://..." /></label></div><div class="field-grid"><label>العملة<select id="currency"><option value="ر.س">ريال سعودي (ر.س)</option><option value="د.إ">درهم إماراتي (د.إ)</option><option value="د.ك">دينار كويتي (د.ك)</option><option value="د.ب">دينار بحريني (د.ب)</option></select></label><label>لون الهوية<input id="themeColor" type="color" value="#147d78" /></label></div></div></div>
+      <div class="panel"><div class="panel-title"><div><h2>الأقسام والمنتجات</h2><p>رتب منتجاتك داخل أقسام واضحة</p></div><button id="addCategory" class="btn outline small" type="button">+ قسم جديد</button></div><div id="categoriesEditor" class="categories-editor"></div></div>
+      <div class="panel publish-panel"><div class="panel-title"><div><h2>النشر والمشاركة</h2><p>يمكنك إيقاف المنيو أو إعادة نشره في أي وقت</p></div></div><label class="toggle-row"><span><strong>المنيو منشور</strong><small>السماح للزبائن بفتح الرابط العام</small></span><input id="published" type="checkbox" /></label><div id="shareBox" class="share-box hidden"><label>رابط المنيو العام</label><div class="copy-row"><input id="publicUrl" readonly dir="ltr" /><button id="copyLink" class="btn outline small" type="button">نسخ الرابط</button></div><div class="qr-holder"><img id="qrImage" alt="رمز QR لرابط المنيو" /><div><strong>رمز QR للمنيو</strong><p class="muted">اطبعه على طاولات المطعم أو أرسله للزبائن.</p><button id="downloadQr" class="btn outline small" type="button">تحميل QR</button></div></div></div></div>
+      <button id="deleteMenu" class="btn danger-text" type="button">حذف هذه القائمة نهائيًا</button></div><aside class="preview-side"><div class="preview-title">معاينة مباشرة <span>للجوال</span></div><div class="phone"><div class="phone-notch"></div><iframe id="menuPreview" title="معاينة المنيو"></iframe></div><p class="muted centered small-copy">المعاينة تعرض آخر تعديل غير محفوظ أيضًا.</p></aside></div></section>
+  </div>
+</div>
+
+<main id="publicView" class="public-view hidden"><div id="publicContent"></div></main>
+<div id="modal" class="modal-overlay hidden"><div class="modal-card"><div class="modal-title"><h3 id="modalHeading">إضافة</h3><button id="modalClose" class="icon-button" type="button" aria-label="إغلاق">✕</button></div><form id="modalForm" class="form-stack"><div id="modalFields"></div><div class="modal-actions"><button id="modalCancel" type="button" class="btn outline">إلغاء</button><button class="btn primary" type="submit">حفظ</button></div></form></div></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
